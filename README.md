@@ -250,7 +250,11 @@ Create file with session upload. Use this for the files over 4MB. This is a sync
 | params.readableStream | <code>Object</code> |  | Readable Stream with file's content |
 | params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
 | params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
-| [params.chunksToUpload] | <code>Number</code> | <code>20</code> | Chunks to upload per request. More chunks per request requires more RAM |
+| [params.retryOptions] | <code>Object</code> |  |
+| [params.retryOptions.forever] | <code>Boolean</code> | <code>false</code> | Whether to retry forever.
+| [params.retryOptions.unref] | <code>Boolean</code> | <code>false</code> | Whether to [unref](https://nodejs.org/api/timers.html#timers_unref) the setTimeout's.
+| [params.retryOptions.maxRetryTime] | <code>Number</code> | <code>Infinity</code> | The maximum time (in milliseconds) that the retried operation is allowed to run.
+| [params.retryOptions.retries] | <code>Number</code> | <code>1</code> | The maximum amount of times to retry the operation.
 
 
 ```javascript
