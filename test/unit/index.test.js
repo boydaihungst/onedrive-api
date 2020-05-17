@@ -6,5 +6,5 @@ describe('Loading the module', () => {
     const value = require('../../lib/index');
     expect(value).to.be.a('object');
     expect(value.items).to.be.a('object');
-  })
-})
+  });
+});

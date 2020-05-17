@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "is-empty-object": "^1.1.1",
+    "promise-retry": "^1.1.1",
     "request": "^2.88.0",
     "request-promise": "^2.0.1"
   },
