@@ -1,29 +1,29 @@
 // createFolder.test.js
 const faker = require('faker');
 
-describe('createFolder', function() {
+describe('createFolder', function () {
   let createdFolder;
 
-  after(function(done) {
+  after(function (done) {
     oneDrive.items
       .delete({
         accessToken: accessToken,
         itemId: createdFolder.id,
       })
-      .then(function(_item) {
+      .then(function (_item) {
         done();
       })
       .catch(errorHandler(done));
   });
 
-  it('should create random folder at root drive', function(done) {
+  it('should create random folder at root drive', function (done) {
     oneDrive.items
       .createFolder({
         accessToken: accessToken,
         rootItemId: 'root',
         name: 'test' + faker.random.word(),
       })
-      .then(function(folder) {
+      .then(function (folder) {
         expect(folder).to.be.a('Object');
         expect(folder.name).to.be.a('String');
         expect(folder.folder).to.be.a('Object');

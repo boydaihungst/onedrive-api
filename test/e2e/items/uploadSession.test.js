@@ -3,11 +3,11 @@
 const faker = require('faker');
 const stringStream = require('string-to-stream');
 
-describe('uploadSession', function() {
-  describe('Should upload Session 1kB file using Stream in root directory', function() {
+describe('uploadSession', function () {
+  describe('Should upload Session 1kB file using Stream in root directory', function () {
     let createdFile;
 
-    it('Should upload Session 1kB file using Stream in root directory', function(done) {
+    it('Should upload Session 1kB file using Stream in root directory', function (done) {
       const filename = 'test-uploadSession-' + faker.random.word();
       // 1Kb
       const fileContent = 'a'.repeat(1 * 1024);
@@ -20,7 +20,7 @@ describe('uploadSession', function() {
           readableStream: readableStream,
           fileSize: fileContent.length,
         })
-        .then(function(item) {
+        .then(function (item) {
           expect(item.id).to.be.a('String');
           expect(item.name).to.be.a('String');
           expect(item.size).to.be.a('Number');
@@ -36,23 +36,23 @@ describe('uploadSession', function() {
         });
     });
 
-    after(function(done) {
+    after(function (done) {
       oneDrive.items
         .delete({
           accessToken: accessToken,
           itemId: createdFile.id,
         })
-        .then(function(_folder) {
+        .then(function (_folder) {
           done();
         })
         .catch(errorHandler(done));
     });
   });
 
-  describe('Should upload Session 10MB file using Stream', function() {
+  describe('Should upload Session 10MB file using Stream', function () {
     let createdFile;
 
-    it('Should upload Session 10MB file using Stream', function(done) {
+    it('Should upload Session 10MB file using Stream', function (done) {
       const filename = 'test-uploadSession-' + faker.random.word();
       // 10MB
       const fs = require('fs');
@@ -67,7 +67,7 @@ describe('uploadSession', function() {
           readableStream: readableStream,
           fileSize: fsStat.size,
         })
-        .then(function(item) {
+        .then(function (item) {
           expect(item.id).to.be.a('String');
           expect(item.name).to.be.a('String');
           expect(item.size).to.be.a('Number');
@@ -80,23 +80,23 @@ describe('uploadSession', function() {
           errorHandler(done);
         });
     });
-    after(function(done) {
+    after(function (done) {
       oneDrive.items
         .delete({
           accessToken: accessToken,
           itemId: createdFile.id,
         })
-        .then(function(_folder) {
+        .then(function (_folder) {
           done();
         })
         .catch(errorHandler(done));
     });
   });
 
-  describe('Should upload Session 1kb file inside a folder using parentId', function() {
+  describe('Should upload Session 1kb file inside a folder using parentId', function () {
     let filename, readableStream, fileContent, folderName, createdFolder;
 
-    before(function(done) {
+    before(function (done) {
       filename = 'test-uploadSession-' + faker.random.word();
       fileContent = 'a'.repeat(1 * 1024);
       readableStream = new stringStream(fileContent);
@@ -108,14 +108,14 @@ describe('uploadSession', function() {
           rootItemId: 'root',
           name: folderName,
         })
-        .then(function(folder) {
+        .then(function (folder) {
           createdFolder = folder;
           done();
         })
         .catch(done);
     });
 
-    it('Should upload Session 1kb file inside a folder using parentId', function(done) {
+    it('Should upload Session 1kb file inside a folder using parentId', function (done) {
       filename = 'test-uploadSession-' + faker.random.word();
       // 1Kb
 
@@ -127,7 +127,7 @@ describe('uploadSession', function() {
           fileSize: fileContent.length,
           parentId: createdFolder.id,
         })
-        .then(function(item) {
+        .then(function (item) {
           expect(item.id).to.be.a('String');
           expect(item.name).to.be.a('String');
           expect(item.size).to.be.a('Number');
@@ -142,29 +142,29 @@ describe('uploadSession', function() {
         });
     });
 
-    after(function(done) {
+    after(function (done) {
       oneDrive.items
         .delete({
           accessToken: accessToken,
           itemId: createdFile.id,
         })
-        .then(function() {
+        .then(function () {
           return oneDrive.items.delete({
             accessToken: accessToken,
             itemId: createdFolder.id,
           });
         })
-        .then(function(_folder) {
+        .then(function (_folder) {
           done();
         })
         .catch(errorHandler(done));
     });
   });
 
-  describe('Should upload Session 1kb file inside a folder using parentPath', function() {
+  describe('Should upload Session 1kb file inside a folder using parentPath', function () {
     let filename, readableStream, fileContent, folderName, createdFolder;
 
-    before(function(done) {
+    before(function (done) {
       filename = 'test-uploadSession-' + faker.random.word();
       fileContent = 'a'.repeat(1 * 1024);
       readableStream = new stringStream(fileContent);
@@ -176,14 +176,14 @@ describe('uploadSession', function() {
           rootItemId: 'root',
           name: folderName,
         })
-        .then(function(folder) {
+        .then(function (folder) {
           createdFolder = folder;
           done();
         })
         .catch(done);
     });
 
-    it('Should upload Session 1kb file inside a folder using parentPath', function(done) {
+    it('Should upload Session 1kb file inside a folder using parentPath', function (done) {
       oneDrive.items
         .uploadSession({
           accessToken: accessToken,
@@ -192,7 +192,7 @@ describe('uploadSession', function() {
           fileSize: fileContent.length,
           parentPath: folderName,
         })
-        .then(function(item) {
+        .then(function (item) {
           expect(item.id).to.be.a('String');
           expect(item.name).to.be.a('String');
           expect(item.size).to.be.a('Number');
@@ -207,19 +207,19 @@ describe('uploadSession', function() {
         });
     });
 
-    after(function(done) {
+    after(function (done) {
       oneDrive.items
         .delete({
           accessToken: accessToken,
           itemId: createdFile.id,
         })
-        .then(function() {
+        .then(function () {
           return oneDrive.items.delete({
             accessToken: accessToken,
             itemId: createdFolder.id,
           });
         })
-        .then(function(_folder) {
+        .then(function (_folder) {
           done();
         })
         .catch(errorHandler(done));

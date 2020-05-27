@@ -3,10 +3,10 @@
 const faker = require('faker'),
   stringStream = require('string-stream');
 
-describe('uploadSimple', function() {
+describe('uploadSimple', function () {
   let filename, readableStream, fileContent, createdFile, folderName, createdFolder, createdFile2;
 
-  before(function(done) {
+  before(function (done) {
     filename = 'test-uploadSimple-' + faker.random.word();
     fileContent = faker.lorem.paragraphs();
     readableStream = new stringStream(fileContent);
@@ -18,45 +18,45 @@ describe('uploadSimple', function() {
         rootItemId: 'root',
         name: folderName,
       })
-      .then(function(folder) {
+      .then(function (folder) {
         createdFolder = folder;
         done();
       })
       .catch(done);
   });
 
-  after(function(done) {
+  after(function (done) {
     oneDrive.items
       .delete({
         accessToken: accessToken,
         itemId: createdFile.id,
       })
-      .then(function(_item) {
+      .then(function (_item) {
         return oneDrive.items.delete({
           accessToken: accessToken,
           itemId: createdFile2.id,
         });
       })
-      .then(function() {
+      .then(function () {
         return oneDrive.items.delete({
           accessToken: accessToken,
           itemId: createdFolder.id,
         });
       })
-      .then(function(_folder) {
+      .then(function (_folder) {
         done();
       })
       .catch(errorHandler(done));
   });
 
-  it('Should upload Simple file using Stream', function(done) {
+  it('Should upload Simple file using Stream', function (done) {
     oneDrive.items
       .uploadSimple({
         accessToken: accessToken,
         filename: filename,
         readableStream: readableStream,
       })
-      .then(function(item) {
+      .then(function (item) {
         expect(item.id).to.be.a('String');
         expect(item.name).to.be.a('String');
         expect(item.size).to.be.a('Number');
@@ -68,7 +68,7 @@ describe('uploadSimple', function() {
       .catch(errorHandler(done));
   });
 
-  it('Should upload Simple file using Stream and parentPath', function(done) {
+  it('Should upload Simple file using Stream and parentPath', function (done) {
     oneDrive.items
       .uploadSimple({
         accessToken: accessToken,
@@ -76,7 +76,7 @@ describe('uploadSimple', function() {
         parentPath: folderName,
         readableStream: readableStream,
       })
-      .then(function(item) {
+      .then(function (item) {
         expect(item.id).to.be.a('String');
         expect(item.name).to.be.a('String');
         expect(item.size).to.be.a('Number');

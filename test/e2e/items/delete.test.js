@@ -1,13 +1,13 @@
 // delete.test.js
 const faker = require('faker');
 
-describe('delete', function() {
+describe('delete', function () {
   const folderName = 'test-' + faker.random.word(),
     fileName1 = 'test-' + faker.random.word();
 
   let createdFolder;
 
-  before(function(done) {
+  before(function (done) {
     //create folder and files inside
     oneDrive.items
       .createFolder({
@@ -15,20 +15,20 @@ describe('delete', function() {
         rootItemId: 'root',
         name: folderName,
       })
-      .then(function(_folder) {
+      .then(function (_folder) {
         createdFolder = _folder;
         done();
       })
       .catch(done);
   });
 
-  it('Should delete empty folder', function(done) {
+  it('Should delete empty folder', function (done) {
     oneDrive.items
       .delete({
         accessToken: accessToken,
         itemId: createdFolder.id,
       })
-      .then(function(_item) {
+      .then(function (_item) {
         //delete returns 204 No Contentđ
         expect(_item).to.be.equal(undefined);
         done();
